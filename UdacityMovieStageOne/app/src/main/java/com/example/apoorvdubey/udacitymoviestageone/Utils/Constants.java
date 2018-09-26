@@ -46,7 +46,4 @@ public class Constants {
         return API_KEY_V3;
     }
 
-    public static String getApiKeyV4() {
-        return API_KEY_V4;
-    }
 }
