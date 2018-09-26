@@ -4,6 +4,6 @@
     <android.support.v7.preference.SwitchPreferenceCompat
         android:defaultValue="true"
         android:title="Settings option"
-        android:key="example_switch"
+        android:key="popular_movie_switch"
         android:summary="Turn this option on or off" />
 </PreferenceScreen>

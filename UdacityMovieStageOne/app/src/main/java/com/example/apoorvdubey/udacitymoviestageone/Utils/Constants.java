@@ -3,8 +3,8 @@ package com.example.apoorvdubey.udacitymoviestageone.Utils;
 public class Constants {
 
     private static final String BASE_URL = "http://api.themoviedb.org/3/";
-    private static final String API_KEY_V3 = "###########################";
-    private static final String API_KEY_V4 = "###########################";
+    private static final String API_KEY_V3 = "######";
+    private static final String API_KEY_V4 = "..";
     private static final String BASE_URL_POSTER = "http://image.tmdb.org/t/p/";
     private static final String POSTER_SIZE = "w500";
     public static final String PAGE = "page";
@@ -46,4 +46,7 @@ public class Constants {
         return API_KEY_V3;
     }
 
+    public static String getApiKeyV4() {
+        return API_KEY_V4;
+    }
 }
