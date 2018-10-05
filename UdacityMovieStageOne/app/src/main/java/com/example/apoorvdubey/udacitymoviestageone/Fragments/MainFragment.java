@@ -1,14 +1,12 @@
 package com.example.apoorvdubey.udacitymoviestageone.Fragments;
 
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.preference.PreferenceManager;
@@ -46,14 +44,35 @@ public class MainFragment extends Fragment implements Toolbar.OnMenuItemClickLis
     private PosterViewAdapter posterViewAdapter;
     private RecyclerView recyclerView;
     private AutoFitGridLayoutAdapter layoutManager;
+    private OnHeadlineSelectedListener mCallback;
+
 
     public MainFragment() {
+    }
+
+    // Container Activity must implement this interface
+    public interface OnHeadlineSelectedListener {
+        void onArticleSelected(int position, MoviesResponse response);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnHeadlineSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override
@@ -162,17 +181,18 @@ public class MainFragment extends Fragment implements Toolbar.OnMenuItemClickLis
 
     @Override
     public void onItemClick(View view, int position) {
-        DetailFragment fragment = new DetailFragment();
-        Bundle args = new Bundle();
-        args.putInt(Constants.POSITION, position);
-        args.putParcelable(Constants.RESPONSE, response);
-        fragment.setArguments(args);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.framelayout, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+//        DetailFragment fragment = new DetailFragment();
+//        Bundle args = new Bundle();
+//        args.putInt(Constants.POSITION, position);
+//        args.putParcelable(Constants.RESPONSE, response);
+//        fragment.setArguments(args);
+//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.framelayout, fragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+//
+        mCallback.onArticleSelected(position,response);
     }
 
 }
-

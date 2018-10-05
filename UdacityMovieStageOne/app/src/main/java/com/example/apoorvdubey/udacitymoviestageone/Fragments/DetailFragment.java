@@ -1,4 +1,8 @@
+
+
 package com.example.apoorvdubey.udacitymoviestageone.Fragments;
+
+
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +22,8 @@ import com.squareup.picasso.Picasso;
 
 public class DetailFragment extends Fragment {
 
+    public static final String ARG_POSITION = "position";
+    public static final String ARG_RESPONSE = "response";
     private MoviesResponse response;
     private int position;
     private ImageView mvImageView;
@@ -33,7 +39,7 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_detail, container, false);
     }
@@ -42,11 +48,11 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle.containsKey(Constants.POSITION)) {
-            position = getArguments().getInt(Constants.POSITION);
+        if (bundle != null && bundle.containsKey(ARG_POSITION)) {
+            position = getArguments().getInt(ARG_POSITION);
         }
-        if (bundle.containsKey(Constants.RESPONSE)) {
-            response = getArguments().getParcelable(Constants.RESPONSE);
+        if (bundle != null && bundle.containsKey(ARG_RESPONSE)) {
+            response = getArguments().getParcelable(ARG_RESPONSE);
         }
         mvImageView = view.findViewById(R.id.movie_poster_view);
         mvPlotSummary = view.findViewById(R.id.movie_plot_summary);
