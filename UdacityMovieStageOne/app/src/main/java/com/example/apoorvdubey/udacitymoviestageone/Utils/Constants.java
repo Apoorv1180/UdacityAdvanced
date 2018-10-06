@@ -25,9 +25,7 @@ public class Constants {
     public static final String ADULT = "adult";
     public static final String OVERVIEW = "overview";
     public static final String RELEASE_DATE = "release_date";
-    public static final String POSITION = "position";
-    public static final String RESPONSE = "response";
-    public static final int LOADER_ID = 1;
+     public static final int LOADER_ID = 1;
     public static final int WIDTH = 500;
 
     public static String getBaseUrl() {

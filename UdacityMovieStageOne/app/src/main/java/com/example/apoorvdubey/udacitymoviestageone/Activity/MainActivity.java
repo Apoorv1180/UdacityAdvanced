@@ -30,29 +30,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnHe
         for(int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++){
             Log.i("yoyo", "Found fragment: " + fragmentManager.getBackStackEntryAt(entry).getName());
         }
-        if (position == -1) {
+        if (fragmentManager.getBackStackEntryCount() == 0) {
             mainFragment = new MainFragment();
-            fragmentTransaction.replace(R.id.framelayout, mainFragment, "MAIN_FRAGMENT");
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.framelayout, mainFragment);
             fragmentTransaction.commit();
         }
         else {
-            detailFragment = new DetailFragment();
-            Bundle args = new Bundle();
-            args.putInt(DetailFragment.ARG_POSITION, position);
-            args.putParcelable(DetailFragment.ARG_RESPONSE, response);
-            detailFragment.setArguments(args);
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-            // Replace whatever is in the fragment_container view with this fragment,
-            // and add the transaction to the back stack so the user can navigate back
-            transaction.replace(R.id.framelayout, detailFragment, "DETAIL_FRAGMENT");
-            transaction.addToBackStack(null);
-
-            // Commit the transaction
-            transaction.commit();
-        }
+                fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1);
+                    }
     }
 
     @Override
@@ -60,22 +45,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnHe
         super.onRestoreInstanceState(savedInstanceState);
         position=savedInstanceState.getInt(DetailFragment.ARG_POSITION);
         response=savedInstanceState.getParcelable(DetailFragment.ARG_RESPONSE);
+        Bundle args = new Bundle();
+        args.putInt(DetailFragment.ARG_POSITION, position);
+        args.putParcelable(DetailFragment.ARG_RESPONSE, response);
     }
 
     @Override
     public void onArticleSelected(int position, MoviesResponse response) {
-        DetailFragment articleFrag = (DetailFragment)
-                getSupportFragmentManager().findFragmentByTag("DETAIL_FRAGMENT");
-
-        if (articleFrag != null) {
-            // If article frag is available, we're in two-pane layout...
-
-            // Call a method in the ArticleFragment to update its content
-            // articleFrag.updateArticleView(position);
-        } else {
-            // Otherwise, we're in the one-pane layout and must swap frags...
-
-            // Create fragment and give it an argument for the selected article
             this.position = position;
             this.response = response;
             detailFragment = new DetailFragment();
@@ -83,18 +59,11 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnHe
             args.putInt(DetailFragment.ARG_POSITION, position);
             args.putParcelable(DetailFragment.ARG_RESPONSE, response);
             detailFragment.setArguments(args);
-
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-            // Replace whatever is in the fragment_container view with this fragment,
-            // and add the transaction to the back stack so the user can navigate back
             transaction.replace(R.id.framelayout, detailFragment, "DETAIL_FRAGMENT");
-            transaction.addToBackStack(null);
-
-            // Commit the transaction
+            transaction.addToBackStack("DETAIL_FRAGMENT");
             transaction.commit();
 
-        }
     }
 
     @Override

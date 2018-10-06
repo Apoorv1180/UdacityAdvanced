@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.apoorvdubey.udacitymoviestageone.Activity.SettingsActivity;
 import com.example.apoorvdubey.udacitymoviestageone.Network.Client.RetrofitClient;
@@ -31,6 +33,7 @@ public class EmployeeLoader extends AsyncTaskLoader<MoviesResponse> {
     private boolean getSortOrder() {
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(context);
+        Log.i("yoyo",sharedPref.getBoolean(SettingsActivity.KEY_PREF_POPULAR_MOVIES_SWITCH_ON,false)+"");
         return sharedPref.getBoolean
                 (SettingsActivity.KEY_PREF_POPULAR_MOVIES_SWITCH_ON, false);
     }
