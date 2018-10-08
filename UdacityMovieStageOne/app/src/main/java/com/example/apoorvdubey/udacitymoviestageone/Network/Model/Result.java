@@ -1,5 +1,8 @@
 package com.example.apoorvdubey.udacitymoviestageone.Network.Model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity(tableName = "result")
 public class Result implements Parcelable {
 
 @SerializedName(Constants.VOTE_COUNT)
@@ -16,6 +20,7 @@ public class Result implements Parcelable {
 public Integer voteCount;
 @SerializedName(Constants.ID)
 @Expose
+@PrimaryKey(autoGenerate = false)
 public Integer id;
 @SerializedName(Constants.VIDEO)
 @Expose
@@ -38,6 +43,7 @@ public String originalLanguage;
 @SerializedName(Constants.ORIGINAL_TITLE)
 @Expose
 public String originalTitle;
+@Ignore
 @SerializedName(Constants.GENRE_IDS)
 @Expose
 public List<Integer> genreIds = null;
@@ -172,5 +178,21 @@ public String releaseDate;
         parcel.writeByte((byte) (adult == null ? 0 : adult ? 1 : 2));
         parcel.writeString(overview);
         parcel.writeString(releaseDate);
+    }
+
+    public Result(Integer voteCount, Integer id, Boolean video, Double voteAverage, String title, Double popularity, String posterPath, String originalLanguage, String originalTitle, String backdropPath, Boolean adult, String overview, String releaseDate) {
+        this.voteCount = voteCount;
+        this.id = id;
+        this.video = video;
+        this.voteAverage = voteAverage;
+        this.title = title;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.backdropPath = backdropPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.apoorvdubey.udacitymoviestageone.Fragments.DetailFragment;
+import com.example.apoorvdubey.udacitymoviestageone.Fragments.FavouriteFragment;
 import com.example.apoorvdubey.udacitymoviestageone.Fragments.MainFragment;
 import com.example.apoorvdubey.udacitymoviestageone.Network.Model.MoviesResponse;
 import com.example.apoorvdubey.udacitymoviestageone.R;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnHe
 
     private MainFragment mainFragment;
     private DetailFragment detailFragment = null;
+    private FavouriteFragment favouriteFragment=null;
     private int position=-1;
     private MoviesResponse response;
 
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnHe
         }
         else {
                 fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1);
-                    }
+                }
     }
 
     @Override
@@ -64,6 +66,17 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnHe
             transaction.addToBackStack("DETAIL_FRAGMENT");
             transaction.commit();
 
+    }
+
+    @Override
+    public void onFavSelected(boolean value) {
+    if(value){
+        favouriteFragment=new FavouriteFragment();
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    transaction.replace(R.id.framelayout, favouriteFragment, "FAV_FRAGMENT");
+    transaction.addToBackStack("FAV_FRAGMENT");
+    transaction.commit();
+    }
     }
 
     @Override
