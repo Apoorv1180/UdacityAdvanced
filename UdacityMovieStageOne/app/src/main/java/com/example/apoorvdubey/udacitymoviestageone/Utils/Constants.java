@@ -3,8 +3,8 @@ package com.example.apoorvdubey.udacitymoviestageone.Utils;
 public class Constants {
 
     private static final String BASE_URL = "http://api.themoviedb.org/3/";
-    private static final String API_KEY_V3 = "######";
-    private static final String API_KEY_V4 = "..";
+    private static final String API_KEY_V3 = "02e2c23098ac0c7398a4c1d068681bb0";
+    private static final String API_KEY_V4 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMmUyYzIzMDk4YWMwYzczOThhNGMxZDA2ODY4MWJiMCIsInN1YiI6IjViODI5NmE0MGUwYTI2NDU5MjAyYTA0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.er9o3C0UlAXyMKqOS6BpsKnlyutY5mbUAAM7yBnY0RY";
     private static final String BASE_URL_POSTER = "http://image.tmdb.org/t/p/";
     private static final String POSTER_SIZE = "w500";
     public static final String PAGE = "page";
@@ -25,9 +25,7 @@ public class Constants {
     public static final String ADULT = "adult";
     public static final String OVERVIEW = "overview";
     public static final String RELEASE_DATE = "release_date";
-    public static final String POSITION = "position";
-    public static final String RESPONSE = "response";
-    public static final int LOADER_ID = 1;
+     public static final int LOADER_ID = 1;
     public static final int WIDTH = 500;
 
     public static String getBaseUrl() {

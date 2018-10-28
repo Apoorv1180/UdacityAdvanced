@@ -1,5 +1,6 @@
 package com.example.apoorvdubey.udacitymoviestageone.Network.Model;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 

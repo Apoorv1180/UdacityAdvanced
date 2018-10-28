@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.apoorvdubey.udacitymoviestageone.Activity.SettingsActivity;
 import com.example.apoorvdubey.udacitymoviestageone.Network.Client.RetrofitClient;
 import com.example.apoorvdubey.udacitymoviestageone.Network.Interface.MostRatedMovieApiInterface;
 import com.example.apoorvdubey.udacitymoviestageone.Network.Interface.PopularMovieApiInterface;
 import com.example.apoorvdubey.udacitymoviestageone.Network.Model.MoviesResponse;
+import com.example.apoorvdubey.udacitymoviestageone.R;
 
 import java.io.IOException;
 
@@ -17,7 +20,7 @@ import retrofit2.Call;
 
 public class EmployeeLoader extends AsyncTaskLoader<MoviesResponse> {
 
-    public boolean sortOrder;
+    public String sortOrder;
     public Context context;
     public MoviesResponse response;
     private PopularMovieApiInterface popularMovieApiInterface;
@@ -28,19 +31,21 @@ public class EmployeeLoader extends AsyncTaskLoader<MoviesResponse> {
         this.context = context;
     }
 
-    private boolean getSortOrder() {
+    private String getSortOrder() {
         SharedPreferences sharedPref =
                 PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPref.getBoolean
-                (SettingsActivity.KEY_PREF_POPULAR_MOVIES_SWITCH_ON, false);
+        String movieOrder = sharedPref.getString(context.getString(R.string.sp_key_sort_order_list),context.getResources().getString(R.string.popular_movies));
+        Log.i("yoyo",movieOrder);
+        return movieOrder;
+
     }
 
     @Override
     public MoviesResponse loadInBackground() {
         sortOrder = getSortOrder();
-        if (sortOrder) {
+        if (sortOrder.equals("POPULAR MOVIES")) {
             response = fetchMyPopularMovieData();
-        } else {
+        } else if(sortOrder.equals("TOP RATED MOVIES")){
             response = fetchMyTopRatedMovieData();
         }
         return response;

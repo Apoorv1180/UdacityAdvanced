@@ -1,14 +1,12 @@
 package com.example.apoorvdubey.udacitymoviestageone.Fragments;
 
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.preference.PreferenceManager;
@@ -38,7 +36,7 @@ import static com.example.apoorvdubey.udacitymoviestageone.Utils.Constants.WIDTH
 
 public class MainFragment extends Fragment implements Toolbar.OnMenuItemClickListener, LoaderManager.LoaderCallbacks<MoviesResponse>, PosterViewAdapter.ItemClickListener {
     private Toolbar toolbar;
-    private Boolean switchPref;
+    private String switchPref;
     private MoviesResponse response;
     private List<Result> resultList = new ArrayList<>();
     private TextView emptyView;
@@ -46,14 +44,37 @@ public class MainFragment extends Fragment implements Toolbar.OnMenuItemClickLis
     private PosterViewAdapter posterViewAdapter;
     private RecyclerView recyclerView;
     private AutoFitGridLayoutAdapter layoutManager;
+    private OnHeadlineSelectedListener mCallback;
+
 
     public MainFragment() {
+    }
+
+    // Container Activity must implement this interface
+    public interface OnHeadlineSelectedListener {
+        void onArticleSelected(int position, MoviesResponse response);
+        void onFavSelected(boolean value);
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnHeadlineSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override
@@ -70,10 +91,14 @@ public class MainFragment extends Fragment implements Toolbar.OnMenuItemClickLis
         setRecyclerView(view);
         setToolBar(view);
         if(Utils.isConnected(getActivity())) {
-            if (getActivity().getSupportLoaderManager() == null)
-                getActivity().getSupportLoaderManager().initLoader(Constants.LOADER_ID, null, this).forceLoad();
-            else
-                getActivity().getSupportLoaderManager().restartLoader(Constants.LOADER_ID, null, this).forceLoad();
+            if (switchPref.contains("FAVOURITE MOVIES")) {
+                        mCallback.onFavSelected(true);
+            } else {
+                if (getActivity().getSupportLoaderManager() == null)
+                    getActivity().getSupportLoaderManager().initLoader(Constants.LOADER_ID, null, this).forceLoad();
+                else
+                    getActivity().getSupportLoaderManager().restartLoader(Constants.LOADER_ID, null, this).forceLoad();
+            }
         }else {
             emptyView.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
@@ -85,11 +110,15 @@ public class MainFragment extends Fragment implements Toolbar.OnMenuItemClickLis
     private void setToolBar(View view) {
         toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(this);
-        if (switchPref) {
+        if (switchPref.equals("POPULAR MOVIES")) {
             toolbar.setTitle(R.string.POPULAR);
-        } else {
+        } else if (switchPref.equals("TOP RATED MOVIES"))
+            {
             toolbar.setTitle(R.string.TOP_RATED);
         }
+        else
+            toolbar.setTitle("FAVOURITE MOVIES");
+
         toolbar.inflateMenu(R.menu.menu_main);
     }
 
@@ -97,7 +126,7 @@ public class MainFragment extends Fragment implements Toolbar.OnMenuItemClickLis
         if (getActivity() != null) {
             SharedPreferences sharedPref =
                     PreferenceManager.getDefaultSharedPreferences(getActivity());
-            switchPref = sharedPref.getBoolean(SettingsActivity.KEY_PREF_POPULAR_MOVIES_SWITCH_ON, false);
+            switchPref = sharedPref.getString(getActivity().getString(R.string.sp_key_sort_order_list),getActivity().getResources().getString(R.string.popular_movies));
         }
     }
 
@@ -162,17 +191,7 @@ public class MainFragment extends Fragment implements Toolbar.OnMenuItemClickLis
 
     @Override
     public void onItemClick(View view, int position) {
-        DetailFragment fragment = new DetailFragment();
-        Bundle args = new Bundle();
-        args.putInt(Constants.POSITION, position);
-        args.putParcelable(Constants.RESPONSE, response);
-        fragment.setArguments(args);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.framelayout, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        mCallback.onArticleSelected(position,response);
     }
 
 }
-
