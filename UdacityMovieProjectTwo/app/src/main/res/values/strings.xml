@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">UdacityMovieProjectTwo</string>
+    <string name="action_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sp_key_sort_order">Sort Order</string>
+    <string name="release_date">Release Date</string>
+    <string name="vote_average">Vote Average</string>
+    <string name="plot">Plot Summary</string>
+    <string name="no_data_found">No data found</string>
+    <string name="no_internet">NO INTERNET</string>
+    <string name="image_description">image</string>
+    <string name="POPULAR">POPULAR MOVIES</string>
+    <string name="TOP_RATED">Top Rated Movies</string>
+    <string name="sp_key_sort_order_list">sort_order_list</string>
+    <string name="popular_movies">POPULAR MOVIES</string>
+    <string name="top_rated_movies">TOP RATED MOVIES</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews_yet">----NO REVIEWS YET----</string>
+    <string name="no_trailers_yet">--No Trailers Yet----</string>
+    <string name="youtube_uri">http://www.youtube.com/watch?v=</string>
+    <string name="movie_trailer">Movie Trailer</string>
+    <string name="share_link">Share link!</string>
+    <string name="no_data_available">No Data Available</string>
+    <string name="na">NA</string>
+    <string name="detail_frag">DETAIL_FRAGMENT</string>
+    <string name="sort_order">sort_order</string>
+    <string name="_true_">true</string>
+    <string name="_false_">false</string>
+    <string name="error">must implement OnHeadlineSelectedListener</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="aelect_sort_order">Select a Sort Order</string>
+    <string name="so_or">Sort Order</string>
+</resources>

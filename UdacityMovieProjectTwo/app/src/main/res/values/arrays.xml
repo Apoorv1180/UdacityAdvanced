@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_order">
+        <item>POPULAR MOVIES</item>
+        <item>TOP RATED MOVIES</item>
+        <item>FAVOURITE MOVIES</item>
+    </string-array>
+    <string-array name="sort_order_values">
+        <item>POPULAR MOVIES</item>
+        <item>TOP RATED MOVIES</item>
+        <item>FAVOURITE MOVIES</item>
+    </string-array>
+</resources>
